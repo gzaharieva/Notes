@@ -3,20 +3,18 @@ package notes.parse.com.notes;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,10 +28,15 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.SignInButton;
+import com.parse.LogInCallback;
+import com.parse.ParseACL;
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-import notes.parse.com.notes.R;
 
 /**
  * A login screen that offers login via email/password and via Google+ sign in.
@@ -45,17 +48,7 @@ import notes.parse.com.notes.R;
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
+    private final String TAG = NoteListActivity.class.getSimpleName();
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -70,7 +63,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        ParseAnalytics.trackAppOpenedInBackground(getIntent());
         // Find the Google+ sign in button.
         mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
         if (supportsGooglePlayServices()) {
@@ -129,9 +122,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -171,8 +161,24 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+//            ParseUser parseUser = new ParseUser();
+//            parseUser.setUsername(email);
+//            parseUser.setPassword(password);
+//            parseUser.setEmail(email);
+            ParseUser.logInInBackground(email, password, new LogInCallback() {
+
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    if (e == null) {
+                        signInUser();
+                        finish();
+                    } else {
+                        mPasswordView.setError(getString(R.string.error_incorrect_password));
+                        mPasswordView.requestFocus();
+                        Log.d(TAG, "Ex:", e);
+                    }
+                }
+            });
         }
     }
 
@@ -297,7 +303,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<String>();
+        List<String> emails = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
@@ -326,7 +332,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
+                new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
@@ -348,36 +354,27 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
+            ParseUser parseUser = new ParseUser();
+            parseUser.setUsername(mEmail);
+            parseUser.setPassword(mPassword);
+            parseUser.setEmail(mEmail);
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                parseUser.signUp();
+            } catch (ParseException e) {
+                Log.e("LOG", "", e);
                 return false;
             }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
             return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
+//            mAuthTask = null;
             showProgress(false);
 
             if (success) {
-                // 
-                Intent intent = new Intent(LoginActivity.this, NoteListActivity.class);
-                startActivity(intent);
+                signInUser();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -387,9 +384,22 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
         @Override
         protected void onCancelled() {
-            mAuthTask = null;
+//            mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void signInUser() {
+        ParseACL defaultACL = new ParseACL();
+        // Optionally enable public read access.
+        defaultACL.setReadAccess(ParseUser.getCurrentUser(), true);
+        defaultACL.setWriteAccess(ParseUser.getCurrentUser(), true);
+
+        ParseACL.setDefaultACL(defaultACL, true);
+        Log.d(TAG, ParseUser.getCurrentUser().getACL() + "");
+
+        Intent intent = new Intent(this, NoteListActivity.class);
+        startActivity(intent);
     }
 }
 

@@ -3,6 +3,14 @@ package notes.parse.com.notes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 
 /**
@@ -24,6 +32,7 @@ import android.support.v4.app.FragmentActivity;
 public class NoteListActivity extends FragmentActivity
         implements NoteListFragment.Callbacks {
 
+    private final String TAG = NoteListActivity.class.getSimpleName();
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -48,8 +57,22 @@ public class NoteListActivity extends FragmentActivity
                     .findFragmentById(R.id.note_list))
                     .setActivateOnItemClick(true);
         }
+        init();
+    }
 
-        // TODO: If exposing deep links into your app, handle intents here.
+
+    private void init() {
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
+
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                for (ParseObject parseObject : parseObjects) {
+                    Log.d(TAG, "object:" + parseObject.getObjectId());
+                }
+            }
+
+        });
     }
 
     /**
