@@ -1,9 +1,14 @@
 package notes.parse.com.notes;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -11,6 +16,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
+
+import notes.parse.com.notes.dummy.AddNoteActivity;
 
 
 /**
@@ -29,7 +36,7 @@ import java.util.List;
  * {@link NoteListFragment.Callbacks} interface
  * to listen for item selections.
  */
-public class NoteListActivity extends FragmentActivity
+public class NoteListActivity extends ActionBarActivity
         implements NoteListFragment.Callbacks {
 
     private final String TAG = NoteListActivity.class.getSimpleName();
@@ -73,7 +80,37 @@ public class NoteListActivity extends FragmentActivity
             }
 
         });
+
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.home, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_add_note:
+                Intent intent = new Intent(this, AddNoteActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//
+//        if (item.getItemId() == android.R.id.home)
+//        {
+//            NavUtils.navigateUpTo(this, new Intent(this, NoteListActivity.class));
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     /**
      * Callback method from {@link NoteListFragment.Callbacks}
