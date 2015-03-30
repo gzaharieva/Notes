@@ -14,7 +14,31 @@
         android:layout_width="200dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
-        android:src="@drawable/notes_logo" />
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:weightSum="2"
+        android:layout_gravity="bottom">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/action_register"
+            style="@style/AuthenticationButton"
+            android:onClick="onRegisterClick"
+            android:background="@drawable/splash_register_button"/>
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/action_login"
+            android:onClick="onLoginClick"
+            style="@style/AuthenticationButton"
+            android:background="@drawable/splash_login_button"/>
+        </LinearLayout>
+
 
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->

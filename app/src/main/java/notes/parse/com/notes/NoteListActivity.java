@@ -17,7 +17,7 @@ import com.parse.ParseQuery;
 
 import java.util.List;
 
-import notes.parse.com.notes.dummy.AddNoteActivity;
+//import notes.parse.com.notes.AddNoteActivity;
 
 
 /**
@@ -86,7 +86,7 @@ public class NoteListActivity extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.home, menu);
+//        getMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,9 +94,9 @@ public class NoteListActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.action_add_note:
-                Intent intent = new Intent(this, AddNoteActivity.class);
-                startActivity(intent);
+//            case R.id.action_add_note:
+//                Intent intent = new Intent(this, AddNoteActivity.class);
+//                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

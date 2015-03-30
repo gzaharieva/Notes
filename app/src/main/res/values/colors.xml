@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="Indigo_colorPrimaryDark">#303f9f</color>
-    <color name="Indigo_colorPrimary">#239CE8</color> <!--3f51b5-->
-    <color name="Indigo_nav_color">#4675FF</color>
-    <color name="blue">#0084D6</color>
-    <color name="blue_light">#0099cc</color>
-    <color name="background">#E2E2E2</color>
+    <color name="blue">#0077BB</color> <!-- 0084D6-->
+    <color name="blue_light">#0077BB</color> <!-- 0099cc-->
+    <color name="background">#FFFFFF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="grey">#353536</color>
     
 </resources>

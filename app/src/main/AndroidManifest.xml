@@ -37,7 +37,7 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login"
+            android:label="@string/action_login"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
         <activity
@@ -57,7 +57,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".dummy.AddNoteActivity"
+            android:name=".AddNoteActivity"
             android:label="@string/title_activity_add_note" >
         </activity>
     </application>
