@@ -1,10 +1,7 @@
 package notes.parse.com.notes;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -86,7 +83,7 @@ public class NoteListActivity extends ActionBarActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-//        getMenuInflater().inflate(R.menu.home, menu);
+        getMenuInflater().inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,14 +91,14 @@ public class NoteListActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-//            case R.id.action_add_note:
-//                Intent intent = new Intent(this, AddNoteActivity.class);
-//                startActivity(intent);
+            case R.id.action_add_note:
+                Intent intent = new Intent(this, AddNoteActivity.class);
+                startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    //
+
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //
