@@ -17,7 +17,7 @@
         android:title="@string/action_logout"/>
 
     <item
-        android:id="@+id/action_preferences"
+        android:id="@+id/action_menu_preferences"
         android:orderInCategory="99"
         app:showAsAction="collapseActionView"
         android:title="@string/action_settings"

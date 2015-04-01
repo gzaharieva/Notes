@@ -6,6 +6,9 @@ import android.util.Log;
 import com.parse.Parse;
 import com.parse.ParseCrashReporting;
 
+/**
+ * @author gzaharieva
+ */
 public class ParseApplication extends Application {
 
     private static ParseApplication instance;
@@ -14,7 +17,6 @@ public class ParseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        Log.d("LOG", "Initialize app");
         // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
 
@@ -24,8 +26,7 @@ public class ParseApplication extends Application {
         // Add your initialization code here
 //        Parse.initialize(this);
 
-        Parse.initialize(this, "D9JTpVlEupZSqym0e0ZPAwItCBj6EPzZjWflsQhg", "tHeJ6EJ1k9oMZnf7tGwd3QAEyAUo7BSPymVo33XL");
-        //ParseUser.enableAutomaticUser();
+        Parse.initialize(this, BuildConfig.PARSE_APP_ID, BuildConfig.PAERSE_CLIENT_KEY);
     }
 
     public static ParseApplication getInstance() {

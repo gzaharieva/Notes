@@ -56,7 +56,6 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private View mProgressView;
     private View mEmailLoginFormView;
     private SignInButton mPlusSignInButton;
-    private View mSignOutButtons;
     private View mLoginFormView;
 
     @Override
@@ -66,6 +65,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
         // Find the Google+ sign in button.
         mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.
             mPlusSignInButton.setOnClickListener(new OnClickListener() {

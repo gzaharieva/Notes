@@ -37,9 +37,16 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/action_login"
+            android:label="@string/action_sign_in"
             android:windowSoftInputMode="adjustResize|stateHidden" >
         </activity>
+
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/action_sign_up"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        RegisterActivity
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import com.facebook.login.widget.LoginButton;
 import android.view.View;
 
 import com.parse.Parse;
@@ -26,7 +27,7 @@ public class SplashActivity extends Activity {
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 1500;
+    private static final int AUTO_HIDE_DELAY_MILLIS = 1000;
 
     /**
      * Called when the activity is first created.
@@ -42,7 +43,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                ParseUser.logOut();
+
                 if(currentUser != null) {
                 /* Create an Intent that will start the Menu-Activity. */
                     Intent intent = new Intent(SplashActivity.this, NoteListActivity.class);
@@ -54,7 +55,7 @@ public class SplashActivity extends Activity {
     }
 
     public void onRegisterClick(View view){
-        Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+        Intent mainIntent = new Intent(SplashActivity.this, RegisterActivity.class);
         startActivity(mainIntent);
     }
 

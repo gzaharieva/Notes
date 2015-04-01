@@ -12,12 +12,22 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "PARSE_APP_ID", '"mV0Cbhe5CUVDuBZ8ryfZlGbGLdaWr3fcoYhmD4rt"'
+            buildConfigField "String", "PAERSE_CLIENT_KEY", '"q8rSMoJbFCcQiIHl8tbAh4XE7LurE6oxmbJKg4Yo"'
+
+            debuggable true
+            zipAlignEnabled true
+        }
         release {
+            buildConfigField "String", "PARSE_APP_ID", '"mV0Cbhe5CUVDuBZ8ryfZlGbGLdaWr3fcoYhmD4rt"'
+            buildConfigField "String", "PAERSE_CLIENT_KEY", '"q8rSMoJbFCcQiIHl8tbAh4XE7LurE6oxmbJKg4Yo"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/menu'] } }
+
 }
 
 buildscript {
@@ -41,6 +51,11 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.parse.bolts:bolts-android:1.1.4'
     compile 'com.google.android.gms:play-services:6.1.+'
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+//    compile 'org.twitter4j:twitter4j-core:2.2.6'
+//    compile('com.twitter.sdk.android:twitter-core:1.3.1@aar') {
+//        transitive = true;
+//    }
 //    compile('com.twitter.sdk.android:twitter:1.3.2@aar') {
 //        transitive = true;
 //    }

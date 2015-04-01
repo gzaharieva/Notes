@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -71,8 +73,10 @@ public class NoteListActivity extends ActionBarActivity
         parseQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                for (ParseObject parseObject : parseObjects) {
-                    Log.d(TAG, "object:" + parseObject.getObjectId());
+                if (parseObjects != null) {
+                    for (ParseObject parseObject : parseObjects) {
+                        Log.d(TAG, "object:" + parseObject.getObjectId());
+                    }
                 }
             }
 
@@ -94,20 +98,17 @@ public class NoteListActivity extends ActionBarActivity
             case R.id.action_add_note:
                 Intent intent = new Intent(this, AddNoteActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.action_menu_logout:
+                ParseUser.logOut();
+                Intent splashIntent = new Intent(this, SplashActivity.class);
+                startActivity(splashIntent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//
-//        if (item.getItemId() == android.R.id.home)
-//        {
-//            NavUtils.navigateUpTo(this, new Intent(this, NoteListActivity.class));
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     /**
      * Callback method from {@link NoteListFragment.Callbacks}
