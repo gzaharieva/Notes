@@ -39,8 +39,8 @@ public class NoteDetailActivity extends ActionBarActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(NoteDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(NoteDetailFragment.ARG_ITEM_ID));
+            arguments.putSerializable(NoteDetailFragment.ARG_ITEM_ID,
+                    getIntent().getSerializableExtra(NoteDetailFragment.ARG_ITEM_ID));
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

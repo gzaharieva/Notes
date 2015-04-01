@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -6,7 +6,6 @@
               android:orientation="vertical"
               android:background="@color/background"
               tools:context="notes.parse.com.notes.LoginActivity"
-
               android:padding="20dp">
 
     <!-- Login progress -->
@@ -15,18 +14,21 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_gravity="center"
@@ -70,7 +72,7 @@
                 <EditText
                     android:id="@+id/email"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:imeActionId="@+id/login"
                     android:drawablePadding="20dp"
@@ -87,7 +89,7 @@
                 <EditText
                     android:id="@+id/password"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -110,14 +112,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="#80FFFFFF"
                     android:layout_marginTop="@dimen/space_vertical_medium"
                     android:text="@string/label_forgotten_password"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/switch_authentication_context"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_small"
+                android:layout_marginTop="70dp"
+                android:text="@string/label_switch_to_register"/>
+
+
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
 
 
 

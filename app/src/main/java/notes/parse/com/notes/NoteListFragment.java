@@ -3,12 +3,23 @@ package notes.parse.com.notes;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.internal.in;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-import notes.parse.com.notes.dummy.DummyContent;
+import java.util.ArrayList;
+import java.util.List;
+
+import notes.parse.com.notes.data.LocalObjects;
+import notes.parse.com.notes.data.Note;
+
 
 /**
  * A list fragment representing a list of Notes. This fragment
@@ -21,6 +32,8 @@ import notes.parse.com.notes.dummy.DummyContent;
  */
 public class NoteListFragment extends ListFragment {
 
+    private List<Note> notes;
+    private final String TAG = NoteListFragment.class.getSimpleName();
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -47,7 +60,8 @@ public class NoteListFragment extends ListFragment {
         /**
          * Callback for when an item has been selected.
          */
-        public void onItemSelected(String id);
+        public void onItemSelected(Note id);
+        public void stopRefresh();
     }
 
     /**
@@ -56,7 +70,12 @@ public class NoteListFragment extends ListFragment {
      */
     private static Callbacks sDummyCallbacks = new Callbacks() {
         @Override
-        public void onItemSelected(String id) {
+        public void onItemSelected(Note id) {
+        }
+
+        @Override
+        public void stopRefresh() {
+
         }
     };
 
@@ -72,11 +91,38 @@ public class NoteListFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(
-                getActivity(),
-                android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1,
-                DummyContent.ITEMS));
+
+
+        init();
+    }
+    private void init() {
+        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery(LocalObjects.OBJECT_NOTE);
+        notes = new ArrayList<>();
+        parseQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects != null) {
+                    for (ParseObject parseObject : parseObjects) {
+                        Log.d(TAG, "object:" + parseObject.getObjectId());
+                        Note note = new Note(parseObject);
+
+                        notes.add(note);
+                    }
+
+
+                    setListAdapter((new ArrayAdapter<Note>(
+                            getActivity(),
+                            android.R.layout.simple_list_item_activated_1,
+                            android.R.id.text1,
+                            notes)));
+                }else{
+                    //show no contents screen
+                }
+                mCallbacks.stopRefresh();
+            }
+
+        });
+
     }
 
     @Override
@@ -116,7 +162,7 @@ public class NoteListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(notes.get(position));
     }
 
     @Override
@@ -126,6 +172,10 @@ public class NoteListFragment extends ListFragment {
             // Serialize and persist the activated item position.
             outState.putInt(STATE_ACTIVATED_POSITION, mActivatedPosition);
         }
+    }
+
+    public void onRefresh(){
+        init();
     }
 
     /**

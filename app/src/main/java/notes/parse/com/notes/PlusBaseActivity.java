@@ -12,15 +12,17 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.PlusClient;
+import com.google.android.gms.plus.model.people.Person;
 
 
 /**
  * A base class to wrap communication with the Google Play Services PlusClient.
  */
-public abstract class PlusBaseActivity extends ActionBarActivity
-        implements GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener {
+public abstract class PlusBaseActivity extends Activity
+        implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener{
 
     private static final String TAG = PlusBaseActivity.class.getSimpleName();
 
@@ -34,7 +36,8 @@ public abstract class PlusBaseActivity extends ActionBarActivity
     public boolean mPlusClientIsConnecting = false;
 
     // This is the helper object that connects to Google Play Services.
-    private PlusClient mPlusClient;
+//    private PlusClient mPlusClient;
+    private GoogleApiClient mPlusClient;
 
     // The saved result from {@link #onConnectionFailed(ConnectionResult)}.  If a connection
     // attempt has been made, this is non-null.
@@ -50,7 +53,7 @@ public abstract class PlusBaseActivity extends ActionBarActivity
     /**
      * Called when the PlusClient is successfully connected.
      */
-    protected abstract void onPlusClientSignIn();
+    protected abstract void onPlusClientSignIn(String email);
 
     /**
      * Called when the {@link PlusClient} is disconnected.
@@ -77,8 +80,12 @@ public abstract class PlusBaseActivity extends ActionBarActivity
         // Initialize the PlusClient connection.
         // Scopes indicate the information about the user your application will be able to access.
         mPlusClient =
-                new PlusClient.Builder(this, this, this).setScopes(Scopes.PLUS_LOGIN,
-                        Scopes.PLUS_ME).build();
+                new GoogleApiClient.Builder(this)
+                        .addConnectionCallbacks(this)
+                        .addOnConnectionFailedListener(this)
+                        .addApi(Plus.API, Plus.PlusOptions.builder().build())
+                        .addScope(Plus.SCOPE_PLUS_LOGIN)
+                        .build();
     }
 
     /**
@@ -118,33 +125,12 @@ public abstract class PlusBaseActivity extends ActionBarActivity
 
     /**
      * Disconnect the {@link PlusClient} only if it is connected (otherwise, it can throw an error.)
-     * This will call back to {@link #onDisconnected()}.
+     * This will call back to }.
      */
     private void initiatePlusClientDisconnect() {
         if (mPlusClient.isConnected()) {
             mPlusClient.disconnect();
         }
-    }
-
-    /**
-     * Sign out the user (so they can switch to another account).
-     */
-    public void signOut() {
-
-        // We only want to sign out if we're connected.
-        if (mPlusClient.isConnected()) {
-            // Clear the default account in order to allow the user to potentially choose a
-            // different account from the account chooser.
-            mPlusClient.clearDefaultAccount();
-
-            // Disconnect from Google Play Services, then reconnect in order to restart the
-            // process from scratch.
-            initiatePlusClientDisconnect();
-
-            Log.v(TAG, "Sign out successful!");
-        }
-
-        updateConnectButtonState();
     }
 
     /**
@@ -154,25 +140,19 @@ public abstract class PlusBaseActivity extends ActionBarActivity
 
         if (mPlusClient.isConnected()) {
             // Clear the default account as in the Sign Out.
-            mPlusClient.clearDefaultAccount();
-
+            Plus.AccountApi.clearDefaultAccount(getPlusClient());
+            getPlusClient().disconnect();
             // Revoke access to this entire application. This will call back to
             // onAccessRevoked when it is complete, as it needs to reach the Google
             // authentication servers to revoke all tokens.
-            mPlusClient.revokeAccessAndDisconnect(new PlusClient.OnAccessRevokedListener() {
-                public void onAccessRevoked(ConnectionResult result) {
-                    updateConnectButtonState();
-                    onPlusClientRevokeAccess();
-                }
-            });
+            Plus.AccountApi.revokeAccessAndDisconnect(getPlusClient());
         }
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        initiatePlusClientConnect();
+//        initiatePlusClientConnect();
     }
 
     @Override
@@ -220,6 +200,7 @@ public abstract class PlusBaseActivity extends ActionBarActivity
     @Override
     protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
         updateConnectButtonState();
+        Log.d(TAG, "onActivityResult:"+ requestCode+ "-"+responseCode);
         if (requestCode == OUR_REQUEST_CODE && responseCode == RESULT_OK) {
             // If we have a successful result, we will want to be able to resolve any further
             // errors, so turn on resolution with our flag.
@@ -232,6 +213,7 @@ public abstract class PlusBaseActivity extends ActionBarActivity
             // If we've got an error we can't resolve, we're no longer in the midst of signing
             // in, so we can stop the progress spinner.
             setProgressBarVisible(false);
+
         }
     }
 
@@ -242,17 +224,14 @@ public abstract class PlusBaseActivity extends ActionBarActivity
     public void onConnected(Bundle connectionHint) {
         updateConnectButtonState();
         setProgressBarVisible(false);
-        onPlusClientSignIn();
+        final Person currentUser = Plus.PeopleApi.getCurrentPerson(getPlusClient());
+
+        if(currentUser != null) {
+            onPlusClientSignIn(currentUser.getNickname());
+        }
     }
 
-    /**
-     * Successfully disconnected (called by PlusClient)
-     */
-    @Override
-    public void onDisconnected() {
-        updateConnectButtonState();
-        onPlusClientSignOut();
-    }
+
 
     /**
      * Connection failed for some reason (called by PlusClient)
@@ -278,7 +257,7 @@ public abstract class PlusBaseActivity extends ActionBarActivity
         }
     }
 
-    public PlusClient getPlusClient() {
+    public GoogleApiClient getPlusClient() {
         return mPlusClient;
     }
 

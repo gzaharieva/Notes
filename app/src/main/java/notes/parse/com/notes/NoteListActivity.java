@@ -2,10 +2,13 @@ package notes.parse.com.notes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -15,6 +18,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
+
+import notes.parse.com.notes.data.Note;
 
 //import notes.parse.com.notes.AddNoteActivity;
 
@@ -36,20 +41,23 @@ import java.util.List;
  * to listen for item selections.
  */
 public class NoteListActivity extends ActionBarActivity
-        implements NoteListFragment.Callbacks {
+        implements NoteListFragment.Callbacks, SwipeRefreshLayout.OnRefreshListener {
 
     private final String TAG = NoteListActivity.class.getSimpleName();
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
      */
+    private ListView notesListView;
     private boolean mTwoPane;
+    private SwipeRefreshLayout swipeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
 
+//        notesListView = (ListView) findViewById(R.id.note_list);
         if (findViewById(R.id.note_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -63,26 +71,30 @@ public class NoteListActivity extends ActionBarActivity
                     .findFragmentById(R.id.note_list))
                     .setActivateOnItemClick(true);
         }
-        init();
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        swipeLayout.setOnRefreshListener(this);
+        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
-
-    private void init() {
-        ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("TestObject");
-
-        parseQuery.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (parseObjects != null) {
-                    for (ParseObject parseObject : parseObjects) {
-                        Log.d(TAG, "object:" + parseObject.getObjectId());
-                    }
-                }
-            }
-
-        });
+    @Override
+    public void stopRefresh(){
+        swipeLayout.setRefreshing(false);
+    }
+    @Override public void onRefresh() {
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                swipeLayout.setRefreshing(false);
+//            }
+//        }, 5000);
+        ((NoteListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.note_list)).onRefresh();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,13 +127,13 @@ public class NoteListActivity extends ActionBarActivity
      * indicating that the item with the given ID was selected.
      */
     @Override
-    public void onItemSelected(String id) {
+    public void onItemSelected(Note id) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
             // fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(NoteDetailFragment.ARG_ITEM_ID, id);
+            arguments.putSerializable(NoteDetailFragment.ARG_ITEM_ID, (java.io.Serializable) id);
             NoteDetailFragment fragment = new NoteDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
@@ -132,7 +144,7 @@ public class NoteListActivity extends ActionBarActivity
             // In single-pane mode, simply start the detail activity
             // for the selected item ID.
             Intent detailIntent = new Intent(this, NoteDetailActivity.class);
-            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, id);
+            detailIntent.putExtra(NoteDetailFragment.ARG_ITEM_ID, (java.io.Serializable) id);
             startActivity(detailIntent);
         }
     }

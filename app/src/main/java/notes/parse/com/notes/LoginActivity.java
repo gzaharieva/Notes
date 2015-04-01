@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,7 +46,7 @@ import java.util.List;
  */
 public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<Cursor> {
 
-    private final String TAG = NoteListActivity.class.getSimpleName();
+    private final String TAG = LoginActivity.class.getSimpleName();
 
     // UI references.
     private EditText mEmailView;
@@ -57,6 +55,9 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     private View mEmailLoginFormView;
     private SignInButton mPlusSignInButton;
     private View mLoginFormView;
+    private TextView switchAutheticationContext;
+    private boolean isLoginContext = true;
+    private Button mEmailSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
         // Find the Google+ sign in button.
         mPlusSignInButton = (SignInButton) findViewById(R.id.plus_sign_in_button);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (supportsGooglePlayServices()) {
             // Set a listener to connect the user when the G+ button is clicked.
@@ -87,28 +88,93 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+//                    attemptLogin();
+//                    return true;
+//                }
+//                return false;
+//            }
+//        })
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+
+                    boolean isValid = attemptLogin();
+                    if(isValid) {
+                        // Show a progress spinner, and kick off a background task to
+                        // perform the user login attempt.
+                        if (isLoginContext) {
+                            showProgress(true);
+                            login(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                        }else{
+                            register(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                        }
+
+                    }
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
         mEmailLoginFormView = findViewById(R.id.email_login_form);
+
+        switchAutheticationContext = (TextView) findViewById(R.id.switch_authentication_context);
+        switchAutheticationContext.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(isLoginContext){
+                    switchToRegister();
+                }else{
+                    switchToLogin();
+                }
+                isLoginContext = !isLoginContext;
+            }
+        });
+    }
+
+    private void register(String email, String password) {
+        ParseUser user = new ParseUser();
+        user.setUsername(email);
+        user.setPassword(password);
+        user.setEmail(email);
+
+
+        user.signUpInBackground(new SignUpCallback()
+        {
+            public void done(ParseException e)
+            {
+                if (e == null)
+                {
+                    showHomeScreen();
+                }
+                else
+                {
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                    Log.d(TAG, "Ex:", e);
+                }
+            }
+        });
+
+    }
+
+
+    private void switchToLogin() {
+        switchAutheticationContext.setText(getString(R.string.label_switch_to_register));
+        mEmailSignInButton.setText(getString(R.string.action_login));
+
+    }
+
+    private void switchToRegister() {
+        switchAutheticationContext.setText(getString(R.string.label_switch_to_login));
+        mEmailSignInButton.setText(getString(R.string.action_sign_up));
     }
 
     private void populateAutoComplete() {
@@ -121,7 +187,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    public void attemptLogin() {
+    public boolean attemptLogin() {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -131,55 +197,40 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
-
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
+        boolean isValid = true;        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
+            mEmailView.requestFocus();
+            isValid = false;
+        } else if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            mPasswordView.requestFocus();
+            isValid = false;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+            mEmailView.requestFocus();
+            isValid = false;
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-//            ParseUser parseUser = new ParseUser();
-//            parseUser.setUsername(email);
-//            parseUser.setPassword(password);
-//            parseUser.setEmail(email);
-            ParseUser.logInInBackground(email, password, new LogInCallback() {
+       return isValid;
+    }
 
-                @Override
-                public void done(ParseUser parseUser, ParseException e) {
-                    if (e == null) {
-                        signInUser();
-                        finish();
-                    } else {
-                        mPasswordView.setError(getString(R.string.error_incorrect_password));
-                        mPasswordView.requestFocus();
-                        Log.d(TAG, "Ex:", e);
-                    }
+    private void login(String email, String password) {
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
+
+            @Override
+            public void done(ParseUser parseUser, ParseException e) {
+                if (e == null) {
+                    showHomeScreen();
+                    finish();
+                } else {
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                    Log.d(TAG, "Ex:", e);
                 }
-            });
-        }
+            }
+        });
     }
 
     private boolean isEmailValid(String email) {
@@ -202,7 +253,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
+            Log.d(TAG, "Show:"+ show);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             mLoginFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
@@ -229,8 +280,13 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     @Override
-    protected void onPlusClientSignIn() {
-
+    protected void onPlusClientSignIn(String email) {
+            Log.d(TAG, "onPlusClientSignIn");
+        if(isLoginContext){
+            login(email, "");
+        }else{
+            register(email, "");
+        }
     }
 
     @Override
@@ -242,7 +298,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     protected void updateConnectButtonState() {
         //TODO: Update this logic to also handle the user logged in by email.
         boolean connected = getPlusClient().isConnected();
-
+    Log.d(TAG, "updateConnectButtonState:"+ connected);
         mPlusSignInButton.setVisibility(connected ? View.GONE : View.VISIBLE);
         mEmailLoginFormView.setVisibility(connected ? View.GONE : View.VISIBLE);
     }
@@ -303,6 +359,11 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
     }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+        getPlusClient().connect();
+    }
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -325,17 +386,18 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
 
 
 
-    private void signInUser() {
+    private void showHomeScreen() {
         ParseACL defaultACL = new ParseACL();
         // Optionally enable public read access.
         defaultACL.setReadAccess(ParseUser.getCurrentUser(), true);
         defaultACL.setWriteAccess(ParseUser.getCurrentUser(), true);
 
-        ParseACL.setDefaultACL(defaultACL, true);
-        Log.d(TAG, ParseUser.getCurrentUser().getACL() + "");
 
+        ParseACL.setDefaultACL(defaultACL, true);
         Intent intent = new Intent(this, NoteListActivity.class);
         startActivity(intent);
+
+        finish();
     }
 }
 

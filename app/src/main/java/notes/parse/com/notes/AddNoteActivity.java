@@ -1,18 +1,48 @@
 package notes.parse.com.notes;
 
+import android.app.AlertDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
-import notes.parse.com.notes.R;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import notes.parse.com.notes.data.LocalObjects;
 
 public class AddNoteActivity extends ActionBarActivity {
+
+    private final String TAG = AddNoteActivity.class.getSimpleName();
+    private EditText noteEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_note);
+        noteEditText = (EditText) findViewById(R.id.edittext_note);
+    }
+
+    private void createNote() {
+
+        final ParseObject note = new ParseObject(LocalObjects.OBJECT_NOTE);
+        note.put(LocalObjects.FIELD_CONTENT, noteEditText.getText().toString());
+        note.put(LocalObjects.FIELD_IS_IMPORTANT, false);
+
+        note.saveEventually(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null) {
+                    Log.d(TAG, note.getObjectId() + "");
+                }
+            }
+        });
     }
 
 
@@ -31,7 +61,14 @@ public class AddNoteActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_save) {
+            if(!noteEditText.getText().toString().isEmpty()) {
+                createNote();
+
+                finish();
+            }else{
+                new AlertDialog.Builder(this).setMessage(getString(R.string.message_note_not_empty)).setTitle(getString(R.string.warning));
+            }
             return true;
         }
 

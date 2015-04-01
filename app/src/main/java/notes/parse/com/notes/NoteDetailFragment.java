@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.parse.Parse;
+import com.parse.ParseQuery;
 
-import notes.parse.com.notes.dummy.DummyContent;
+import notes.parse.com.notes.data.Note;
+
 
 /**
  * A fragment representing a single Note detail screen.
@@ -26,7 +29,7 @@ public class NoteDetailFragment extends Fragment {
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private Note mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -43,7 +46,11 @@ public class NoteDetailFragment extends Fragment {
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = (Note) getArguments().getSerializable(ARG_ITEM_ID);
+           // ParseQuery.
+//           mItem = new Note(noteId);
+//            mItem.setContent(noteId);
+
         }
     }
 
@@ -54,7 +61,7 @@ public class NoteDetailFragment extends Fragment {
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.note_detail)).setText(mItem.content);
+            ((TextView) rootView.findViewById(R.id.note_detail)).setText(mItem.getContent());
         }
 
         return rootView;

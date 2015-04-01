@@ -49,15 +49,16 @@ public class SplashActivity extends Activity {
                     Intent intent = new Intent(SplashActivity.this, NoteListActivity.class);
                     startActivity(intent);
                     finish();
+                }else{
+                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }, AUTO_HIDE_DELAY_MILLIS);
     }
 
-    public void onRegisterClick(View view){
-        Intent mainIntent = new Intent(SplashActivity.this, RegisterActivity.class);
-        startActivity(mainIntent);
-    }
+
 
     public void onLoginClick(View view){
         Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
