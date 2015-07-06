@@ -5,7 +5,7 @@
               android:gravity="center_horizontal"
               android:orientation="vertical"
               android:background="@color/background"
-              tools:context="notes.parse.com.notes.LoginActivity"
+              tools:context="com.parse.notes.LoginActivity"
               android:padding="20dp">
 
     <!-- Login progress -->
@@ -98,7 +98,7 @@
                     android:singleLine="true"/>
 
                 <Button
-                    android:id="@+id/email_sign_in_button"
+                    android:id="@+id/action_sign_in"
                     style="?android:textAppearanceSmall"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"

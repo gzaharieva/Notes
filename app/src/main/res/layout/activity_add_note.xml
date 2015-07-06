@@ -6,7 +6,7 @@
                 android:paddingRight="@dimen/margin_edit_note"
                 android:paddingTop="@dimen/margin_edit_note"
                 android:paddingBottom="@dimen/margin_edit_note"
-                tools:context="notes.parse.com.notes.AddNoteActivity">
+                tools:context="com.parse.notes.AddNoteActivity">
 
     <EditText
         android:id="@+id/edittext_note"
