@@ -8,7 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-import com.facebook.FacebookSdk;
+
 import com.parse.notes.fragments.HomeAuthenticationFragment;
 
 public class ScreenSlidePagerActivity extends ActionBarActivity
@@ -40,7 +40,7 @@ public class ScreenSlidePagerActivity extends ActionBarActivity
     mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
     mPager.setAdapter(mPagerAdapter);
 
-    FacebookSdk.sdkInitialize(getApplicationContext());
+//    FacebookSdk.sdkInitialize(getApplicationContext());
   }
 
   @Override

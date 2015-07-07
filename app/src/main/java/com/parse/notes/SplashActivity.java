@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import com.facebook.login.widget.LoginButton;
 import android.view.View;
 
-import com.parse.Parse;
 import com.parse.ParseUser;
 
 
@@ -42,26 +40,21 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ParseUser currentUser = ParseUser.getCurrentUser();
+//                ParseUser currentUser = ParseUser.getCurrentUser();
 
-                if(currentUser != null) {
-                /* Create an Intent that will start the Menu-Activity. */
-                    Intent intent = new Intent(SplashActivity.this, NoteListActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
+//                if(currentUser != null) {
+//                /* Create an Intent that will start the Menu-Activity. */
+//                    Intent intent = new Intent(SplashActivity.this, NoteListActivity.class);
+//                    startActivity(intent);
+//                    finish();
+//                }else{
                     Intent intent = new Intent(SplashActivity.this, ScreenSlidePagerActivity.class);
                     startActivity(intent);
                     finish();
-                }
+//                }
             }
         }, AUTO_HIDE_DELAY_MILLIS);
     }
 
 
-
-    public void onLoginClick(View view){
-        Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-        startActivity(mainIntent);
-    }
 }

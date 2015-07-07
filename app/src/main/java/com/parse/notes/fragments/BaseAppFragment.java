@@ -14,12 +14,8 @@ package com.parse.notes.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.GridView;
 
 
 /**
