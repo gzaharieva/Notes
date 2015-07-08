@@ -7,7 +7,6 @@
     <string name="action_sign_in">Login</string>
     <string name="action_register">Register</string>
     <string name="action_sign_up">Sign up</string>
-    <string name="action_sign_in_short">SIGN IN</string>
     <string name="plus_sign_out">Switch Google+ account</string>
     <string name="plus_disconnect">Disconnect from Google+</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -28,6 +27,10 @@
     <string name="label_switch_to_register">Not yet registered? Sign up. </string>
     <string name="label_switch_to_login">I have account already. Login.</string>
 
+    <string name="label_login_screen">Create free account</string>
+
     <string name="message_note_not_empty">Please add note content.</string>
     <string name="warning">Warning</string>
+
+
 </resources>

@@ -9,7 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
 
-import com.parse.notes.fragments.HomeAuthenticationFragment;
+import com.parse.notes.fragments.AuthenticationFragment;
+import com.parse.notes.fragments.LoginAuthenticationFragment;
 
 public class ScreenSlidePagerActivity extends ActionBarActivity
 {
@@ -75,10 +76,10 @@ public class ScreenSlidePagerActivity extends ActionBarActivity
       Fragment result = null;
       switch (position){
         case 0:
-          result = new HomeAuthenticationFragment();
+          result = new AuthenticationFragment();
           break;
         case 1:
-          result = new HomeAuthenticationFragment();
+          result = new LoginAuthenticationFragment();
           break;
       }
       return result;

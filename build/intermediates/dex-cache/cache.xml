@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-af1dadab162f22f35e2a4c7f44755778c9eae265.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-identity/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="fb04b12526b0073c7fb1ebb70c5842d82ee95596">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-eead8468c1bba2420af0b8cc979d692059a40291.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-games/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="055783146ba9654a725442563be78cad303aad1f">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-cb97a3a66636c31167f74a7a427cd305073ec38f.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-plus/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0e8228b4bc69c6a2c8d7c18498a77e53417d2574">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-8a41a591b1f182ecf323f3959b7e21d0fe4a31fc.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-fitness/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3c0b099f9de16b265ecd6122fcb603e7d0d29f90">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-eebefc831e1ec58a1f6b8a77c1a9ce7bb2ad55da.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="73ccb92b70112f2e463e415ef8d7275de7da6516">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-5598e358fa53ffdae5511c95d61efbff9cc55664.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-panorama/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1c5a76debf0c2857ccad422c4a80ed785982f8df">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-1a001c344cc3fe39f6801091fa8e3fb0f1016639.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/libs/ParseFacebookUtilsV4-1.9.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="8e48db090422d6f3ef016f71e2f67ece319b34d2">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/ParseFacebookUtilsV4-1.9.3-db0d6f81f101f0b37df1ec9f8637ad0b99b88c1d.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-99a7510edf3d17aa291618beb23f29a3ea7c14ce.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-nearby/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ef5f051e7308febe289dc93c67c5f32785b4260a">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-1b22cadf77f0df2f477aa8237756d649dde31765.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4c93d99d454c975536bbe3b42283eee847f03ea3">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-10fb45355f0d46ca7213cecae7353e757ce1691d.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-810df94436f053c8d812763e27f5350fd3c2069f.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e3d791b42eaa90416cd0b2d2e608092794a3baa4">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-68980762afc363e7e62ee0f31919ac12de82bb8c.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appstate/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7ff613bf78ab057293892fdbd4169eda899c89b9">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-d40bf7b135f73d158d4ab5828ea1138256ba5665.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9224bc4c54ba95147c7eabd874573763c07cb6be">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-2e9b62f323005473066c19ae072b3a1c6a8665d2.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/libs/ParseCrashReporting-1.9.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4b2fc26f71157545cc214e36008dae494adeda93">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/ParseCrashReporting-1.9.3-276ced3c86e84c4fc92a5bd47b0ddb222592b4db.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-analytics/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="29fd6d3794b71491c2789708cd8d03c71feb8954">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-c53a794839e19c13ca5c2c6b4def3efd44cbf708.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-maps/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="17f8750d5c0749e44dd7c54aa390d9c937803825">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-25b39a2ad41dddd64062aa2567fc7fd0da40fa61.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-745df11183d9a1b6a19c0ef59a0fd23b2df9df80.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-safetynet/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c976518693e89ad44fbfccfc654941eaec198d08">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-7f07c1b657fdb323ec00a7d28679753f6f2225de.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4cd0b093824b3228fffc21ea369b98d0b1db6566">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-9fca2255518dacd5b6810a13a49dd73ecbe24ea7.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a96b762bde4139de855735f175ec4d17dca55a6d">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-7c834b10b51d89649bf66057aefcbdf178907ba9.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-drive/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="41b3870cbe5fa546d8095b5b89d42cb69f3dd175">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-e30e84f16e55bd3b2d4ec7df5107458dcfd66645.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/libs/Parse-1.9.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="35921ead63f6cafd9f84ff178c60fe474c4b17a6">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/Parse-1.9.3-286da3c9a60df37bc445e14d2ad259ba77d3244d.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-appindexing/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a08d65794b844d8e7540bf9a33859bf3b2482d7f">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-59839616479d4cdc6c5425a226647a24da9aa6e7.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/7.0.0/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3033cc3a2c68dff3e5b646d6d084bdbdf7d00b25">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/classes-cf78a6055698a7d5874e075b33e5b93046b4b159.jar" />
+    </item>
+    <item
+        jar="/home/gzaharieva/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.2.0/6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd/bolts-android-1.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="6ee2953ccf51ce72b6d548c30c4633b99eb4f9dd">
+        <dex dex="/home/gzaharieva/Development/Projects/Notes/Notes/app/build/intermediates/pre-dexed/debug/bolts-android-1.2.0-d12f83535f1b92020b66976a9e83d178885f8ee7.jar" />
+    </item>
+
+</items>
