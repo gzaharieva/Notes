@@ -9,7 +9,9 @@
     <dimen name="space_vertical_large">64dp</dimen>
 
 
-    <dimen name="text_size_small">16dp</dimen>
+    <dimen name="text_size_extra_small">16dp</dimen>
+    <dimen name="text_size_small">20dp</dimen>
+
     <dimen name="text_size_meduim">24dp</dimen>
     <dimen name="text_size_large">48dp</dimen>
     <dimen name="button_height">36dp</dimen>

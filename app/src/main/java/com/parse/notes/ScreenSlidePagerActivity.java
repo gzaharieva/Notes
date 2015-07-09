@@ -1,5 +1,7 @@
 package com.parse.notes;
 
+import java.io.Serializable;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,11 +10,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
-
+import com.parse.notes.config.Constants;
 import com.parse.notes.fragments.AuthenticationFragment;
 import com.parse.notes.fragments.LoginAuthenticationFragment;
+import com.parse.notes.fragments.Pager;
+import com.parse.notes.fragments.RegisterAuthenticationFragment;
+import com.parse.notes.listeners.IPagerCallbacks;
 
-public class ScreenSlidePagerActivity extends ActionBarActivity
+public class ScreenSlidePagerActivity extends ActionBarActivity implements IPagerCallbacks, Serializable
 {
   /**
    * The number of pages (wizard steps) to show in this demo.
@@ -41,7 +46,7 @@ public class ScreenSlidePagerActivity extends ActionBarActivity
     mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
     mPager.setAdapter(mPagerAdapter);
 
-//    FacebookSdk.sdkInitialize(getApplicationContext());
+    // FacebookSdk.sdkInitialize(getApplicationContext());
   }
 
   @Override
@@ -56,12 +61,18 @@ public class ScreenSlidePagerActivity extends ActionBarActivity
     else
     {
       // Otherwise, select the previous step.
-      mPager.setCurrentItem(mPager.getCurrentItem() - 1);
+      mPager.setCurrentItem(mPager.getCurrentItem() - 1, true);
     }
   }
 
+  @Override
+  public void setCurrentItem(final Pager position)
+  {
+    mPager.setCurrentItem(position.ordinal(), true);
+  }
+
   /**
-   * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in sequence.
+   * A simple pager adapter that represents 3 ScreenSlidePageFragment objects, in sequence.
    */
   private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter
   {
@@ -74,14 +85,22 @@ public class ScreenSlidePagerActivity extends ActionBarActivity
     public Fragment getItem(int position)
     {
       Fragment result = null;
-      switch (position){
+      switch (position)
+      {
         case 0:
           result = new AuthenticationFragment();
+          Bundle bundle = new Bundle();
+          bundle.putSerializable(Constants.PAGER_CALLBACKS, ScreenSlidePagerActivity.this);
+          result.setArguments(bundle);
           break;
         case 1:
           result = new LoginAuthenticationFragment();
           break;
+        case 2:
+          result = new RegisterAuthenticationFragment();
+          break;
       }
+
       return result;
     }
 

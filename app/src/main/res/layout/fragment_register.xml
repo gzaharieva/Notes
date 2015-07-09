@@ -20,11 +20,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_login_screen"
+            android:text="@string/label_register_screen"
             style="@style/HeaderTextView"
             android:layout_marginBottom="@dimen/space_vertical_small"
             android:id="@+id/textView"/>
 
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/EditTextView"
+            android:hint="@string/prompt_name"
+            android:imeActionId="@+id/login"
+            android:drawablePadding="20dp"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textEmailAddress"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
 
         <EditText
             android:id="@+id/email"
@@ -57,7 +71,7 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
-            android:text="@string/action_sign_up"
+            android:text="@string/action_register"
             android:textColor="@android:color/white"
             android:background="@drawable/splash_login_button"
             android:textStyle="bold"
